@@ -17,9 +17,9 @@ class AuthController extends Controller
             'password' => 'required',
             'device_name' => 'required',
         ]);
-     
+        
         $user = User::where('email', $request->email)->first();
-     
+       
         if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['Credenciais incorreta'],
@@ -29,9 +29,10 @@ class AuthController extends Controller
         return $user->createToken($request->device_name)->plainTextToken;
 
     }
+
     public function logout()
     {
-        auth()->user()->tokens()->delete();
-        return response()->json(['message' => 'Sessão token encerrada com sucesso.']);
+        // auth()->user()->tokens()->delete();
+        // return response()->json(['message' => 'Sessão token encerrada com sucesso.']);
     }
 }
